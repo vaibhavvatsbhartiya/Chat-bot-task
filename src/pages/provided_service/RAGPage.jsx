@@ -1,5 +1,6 @@
 // src/pages/RAGPage.js
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const RAGPage = () => {
   const [query, setQuery] = useState('');
@@ -11,6 +12,7 @@ const RAGPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    toast.warn("this functionlality is not working because API is not available right now");
     // Mock function to simulate the response from RAG
     const fetchResponse = async (query) => {
       // In a real implementation, replace this with an API call to your RAG service

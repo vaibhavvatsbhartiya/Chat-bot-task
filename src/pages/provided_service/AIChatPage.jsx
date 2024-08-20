@@ -1,5 +1,6 @@
 // src/pages/AIChatPage.js
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const AIChatPage = () => {
   const [messages, setMessages] = useState([
@@ -7,18 +8,40 @@ const AIChatPage = () => {
   ]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
       setMessages([...messages, { text: input, isBot: false }]);
       setInput('');
 
-      // Simulate bot response after a short delay
-      setTimeout(() => {
+      try {
+        const response = await axios.post('http://localhost:5000/api/chat', {
+          message: input
+        });
+
+        console.log('API Response:', response.data);
+
+        // Handle the AI response
+        const aiResponse = response.data.choices?.[0]?.message?.content || response.data.BOT;
+
+        if (aiResponse) {
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: aiResponse, isBot: true }
+          ]);
+        } else {
+          console.error('Unexpected response format:', response.data);
+          setMessages(prevMessages => [
+            ...prevMessages,
+            { text: 'Sorry, I could not understand the response.', isBot: true }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching data from AI:', error);
         setMessages(prevMessages => [
           ...prevMessages,
-          { text: 'This is a response from the AI bot.', isBot: true }
+          { text: 'Sorry, there was an error.', isBot: true }
         ]);
-      }, 1000);
+      }
     }
   };
 

@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const ScheduleAppointment = () => {
     const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const ScheduleAppointment = () => {
       e.preventDefault();
       // Handle appointment scheduling logic here
       console.log('Appointment Data:', formData);
+      toast.info("this functionlality is ready to work but not connected with Database");
       // You can add form submission logic or API calls here
     };
   

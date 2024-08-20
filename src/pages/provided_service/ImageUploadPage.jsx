@@ -1,5 +1,6 @@
 // src/pages/ImageUploadPage.js
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ImageUploadPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -8,6 +9,8 @@ const ImageUploadPage = () => {
     const file = e.target.files[0];
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
+      toast.warn("this functionlality is not working because API is not available right now");
+      
     }
   };
 
